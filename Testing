@@ -1,0 +1,90 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="Calculator.WebForm1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Calculator</title>
+    <script>
+        function Validate()
+        {
+            let inputVal1 = getElementById(input1.text);
+            let inputVal2 = getElementById(input2.text);
+            if (inputVal1.GetType(int) && inputval2.GetType(int)) {
+                return true;
+            }
+            else
+            {
+                alert ("Enter Valid Numbers");
+                return false;
+            }
+            
+        }
+
+        function CalculateValue()
+        {
+            let operator = getElementById(input3);
+            if (operator == '+')
+            {
+                return input1 + input2;
+            }
+            else if (operator == '-')
+            {
+                return input1 - input2;
+            }
+            else if (operator == '*')
+            {
+                return input1 * input2;
+            }
+            else
+            {
+                return input1 / input2;
+            }           
+        }
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <asp:Textbox runat="server" ID="input1"></asp:Textbox>
+            <asp:Textbox runat="server" ID="input2"></asp:Textbox>
+            <asp:ListBox runat="server" ID="input3">
+                <asp:ListItem>+</asp:ListItem>
+                <asp:ListItem>-</asp:ListItem>
+                <asp:ListItem>*</asp:ListItem>
+                <asp:ListItem>/</asp:ListItem>
+            </asp:ListBox> 
+            <asp:Button runat="server" ID="submit",
+                OnClientClick="javascript : return Validate();"
+                OnClick="CalculateValue()" />
+        </div>
+    </form>
+</body>
+</html>
+_____________________________________________________________________________________________________
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Calculator
+{
+    public partial class WebForm1 : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void CalculateValue(object sender, EventArgs e)
+        {
+            
+        }
+
+    }
+}
