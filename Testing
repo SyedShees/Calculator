@@ -1,12 +1,7 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="Calculator.WebForm1" %>
+webform1.aspx
 
-<!DOCTYPE html>
+<script type="text/javascript">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-        <script type="text/javascript">
-            
             const answer = document.getElementById("answer");
             function Validate() {
                 var num1 = document.getElementById("numX").value;
@@ -34,7 +29,7 @@
                 }
                 if (option.value === "divide" && num2 === 0) {
                     alert("Can not divide by zero. Please modify number Y")
-                    return false;   
+                    return false;
                 }
                 return true;
 
@@ -65,7 +60,7 @@
             <br />
             <asp:TextBox id="answer" runat="server" type="text"/>
 
-            <asp:Button runat="server" Text="Calculate" ID="btnSubmit" OnClientClick="javascript: return Validate()" OnClick="Calculate" />
+            <asp:Button runat="server" Text="Calculate" ID="btnSubmit" OnClientClick="javascript: return Validate()" OnClick="btnSubmit_Click"/>
 
         </div>
     
@@ -75,35 +70,18 @@
 
 </body>
 </html>
-_____________________________________________________________________________________________________
 
+______________________________________________________
+webform1.aspx.cs
 
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
-namespace CalculatorApp
-{
-    public partial class Calculator : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-        public void Calculate(object sender, EventArgs e)
-        {
-            double num1 = Convert.ToDouble(numX.Text);
+ double num1 = Convert.ToDouble(numX.Text);
             double num2 = Convert.ToDouble(numY.Text);
 
             double result = 0;
-            if(dropdown.SelectedValue == "add")
+            if (dropdown.SelectedValue == "add")
             {
                 result = num1 + num2;
-            } 
+            }
             else if (dropdown.SelectedValue == "subtract")
             {
                 result = num1 - num2;
@@ -119,10 +97,41 @@ namespace CalculatorApp
                 result = num1 / num2;
 
             }
+
             
+
             answer.Text = Convert.ToString(result);
+
+            Response.Redirect("result.aspx?v1=" + num1 + "&v2=" + num2 + "&operator=" + dropdown.SelectedValue + "&res=" + result , false);
+        ______________________________________________________
+        result.aspx
+        
+        <div>
+        </div>
+        <p>
+            <asp:Label ID="Label1" runat="server" Text="X : "></asp:Label>
+            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+        </p>
+        <p>
+            <asp:Label ID="Label2" runat="server" Text="Y : "></asp:Label>
+            <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+        </p>
+        <p>
+            <asp:Label ID="Label3" runat="server" Text="Operator : "></asp:Label>
+            <asp:TextBox ID="TextBox3" runat="server" Width="50px"></asp:TextBox>
+        </p>
+        <p>
+            <asp:Label ID="Label4" runat="server" Text="Result : "></asp:Label>
+            <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+        </p>
+        ______________________________________________________
+        result.aspx.cs
+        
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            TextBox1.Text = Request.QueryString["v1"];
+            TextBox2.Text = Request.QueryString["v2"];
+            TextBox3.Text = Request.QueryString["operator"];
+            TextBox4.Text = Request.QueryString["res"];
+            
         }
-
-
-    }
-}
